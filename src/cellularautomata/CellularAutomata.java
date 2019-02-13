@@ -11,9 +11,9 @@ package cellularautomata;
  */
 public class CellularAutomata {
     
-    private static int x = 30;
-    private static int y = 30;
-    private static int time = 2000;
+    private static int x = 400;
+    private static int y = 500;
+    private static int time = 50;
 
     public static void main(String[] args) {
         

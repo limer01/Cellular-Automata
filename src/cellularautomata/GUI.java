@@ -17,6 +17,12 @@ public class GUI extends JFrame implements MouseMotionListener, MouseListener{
     private int yNew;
     private int[] tempCells = new int[9];
     private int[] newCells = new int[9];
+    
+    private int leftClickX = -10;
+    private int leftClickY = -10;
+    private int rightClickX = -10;
+    private int rightClickY = -10;
+    
 
     public GUI(int xSize, int ySize) {
         super("Java Fire Simulation");
@@ -26,6 +32,7 @@ public class GUI extends JFrame implements MouseMotionListener, MouseListener{
         printCells(cellArray);
         
         setLayout(null);
+        setContentPane(new Board(xSize, ySize, cellArray));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         
@@ -93,7 +100,38 @@ public class GUI extends JFrame implements MouseMotionListener, MouseListener{
                 }
             }//End 2nd For
         }//End Outer For
-        System.out.println();
+        if(leftClickY == -10 && leftClickX == -10){
+            
+        }else{
+            if(leftClickY >= xNew){
+                leftClickY = xNew-1;
+            }else if(leftClickY <= 0){
+                leftClickY = 0;
+            }
+            
+            if(leftClickX >= yNew){
+                leftClickY = yNew-1;
+            }else if(leftClickY <= 0){
+                leftClickY = 0;
+            }
+            cellArray[leftClickY][leftClickX] = 0;//Wall
+        }
+        if(rightClickY == -10 && rightClickX == -10){
+            
+        }else{
+            if(rightClickY >= xNew){
+                rightClickY = xNew-1;
+            }else if(rightClickY <= 0){
+                rightClickY = 0;
+            }
+            
+            if(rightClickX >= yNew){
+                rightClickY = yNew-1;
+            }else if(rightClickY <= 0){
+                rightClickY = 0;
+            }
+            cellArray[rightClickY][rightClickX] = 6;//Water
+        }
     }//End Method
     
     public void gameTimer(int timeTime){
@@ -122,7 +160,7 @@ public class GUI extends JFrame implements MouseMotionListener, MouseListener{
                 cellArray[i][j] = rand.nextInt(2)+4;
             }
         }
-        cellArray[2][2] = 1;
+        //cellArray[2][2] = 1;
     }
     
     public void printCells(int[][] cellsArray){
@@ -137,8 +175,14 @@ public class GUI extends JFrame implements MouseMotionListener, MouseListener{
     @Override
     public void mouseDragged(MouseEvent e) {
         if(dragging){
+            
+            leftClickX = (e.getX()/5-1);
+            leftClickY = (e.getY()/5-5);
             System.out.println("Dragging left");
         }else if(!dragging){
+            
+            rightClickX = (e.getX()/5-1);
+            rightClickY = (e.getY()/5-5);
             System.out.println("Dragging right");
         }
     }
@@ -154,9 +198,14 @@ public class GUI extends JFrame implements MouseMotionListener, MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
         if(e.getButton() == MouseEvent.BUTTON1){
+            leftClickX = (e.getX()/5-1);
+            leftClickY = (e.getY()/5-1);
+            
             System.out.println("X: " + e.getX() + " Y:" + e.getY());
             dragging = true;
         }else if(e.getButton() == MouseEvent.BUTTON3){
+            rightClickX = (e.getX()/5-1);
+            rightClickY = (e.getY()/5-1);
             System.out.println("right Click");
             dragging = false;
         }
