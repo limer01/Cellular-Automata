@@ -13,7 +13,7 @@ public class CellularAutomata {
     
     private static int x = 30;
     private static int y = 30;
-    private static int time = 20000;
+    private static int time = 2000;
 
     public static void main(String[] args) {
         

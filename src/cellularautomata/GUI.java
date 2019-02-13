@@ -45,11 +45,13 @@ public class GUI extends JFrame implements MouseMotionListener, MouseListener{
                 
                 int tempNumPlus = 0;
                 
+                //Loops to grab surrounding the surrounding cells
                 for(int iX = -1; iX<=1; iX++){
                     for(int jX = -1; jX <= 1; jX++){
                          int xValue = i+iX;
                          int yValue = j+jX;
                          
+                         //This is the wraparound for the cells on edges
                          if(xValue == -1){
                              xValue = xNew-1;
                          }else if(xValue == xNew){
@@ -63,19 +65,43 @@ public class GUI extends JFrame implements MouseMotionListener, MouseListener{
                          }
                         
                         tempCells[tempNumPlus] = cellArray[xValue][yValue];  
-                        tempNumPlus++;  
+                        tempNumPlus++;//from 0-9 for surrounding cells 
                     }
                 }
                 Cells myCells = new Cells(tempCells);
                 newCells = myCells.returnCells();
-            }
-        }
-    }
+                
+                for(int iY = -1; iY<1; iY++){
+                    for(int jY = -1; jY<1; jY++){
+                        
+                        int xValue = i+iY;
+                        int yValue = j+jY;
+
+                        if(xValue == -1){
+                            xValue = xNew-1;
+                        }else if(xValue == xNew){
+                            xValue = 0;
+                        }
+
+                        if(yValue == -1){
+                            yValue = yNew-1;
+                        }else if(yValue == yNew){
+                            yValue = 0;
+                        }
+                        cellArray[xValue][yValue] = newCells[(iY+1)*3+(jY+1)];
+                    }
+                }
+            }//End 2nd For
+        }//End Outer For
+        System.out.println();
+    }//End Method
     
     public void gameTimer(int timeTime){
         TimerTask task = new TimerTask() {
             public void run(){
+                printCells(cellArray);
                 drawCells();
+                printCells(cellArray);
             }
         };
         
